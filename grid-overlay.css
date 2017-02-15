@@ -1,0 +1,125 @@
+/**
+* Pure CSS Responsive Grid Overlay
+* With variables and a mobile first approach
+* Works in Chrome with e.g. the Styler extension or could be added conditionally in your build setup or...?
+* https://github.com/larsenwork/Pure-CSS-Responsive-Grid-Overlay
+*/
+
+:root {
+    /* Global settings */
+    --grid-display: block; /* Toggle grid visibility with "block" or "none" */
+    --grid-z_index: 1000; /* The z-index should be bigger than any used on the site */
+
+    /* Grid settings */
+    --media-query: 'Base';
+    --grid-columns: 6;
+    --grid-baseline: 4px;
+    --grid-baseline-top: 3px; /* Must be smaller than grid-baseline */
+    --grid-offset: 16px;
+    --grid-gutter: 8px;
+    --grid-color: 190, 100%, 50%; /* hsl value */
+    --grid-vertical-opacity: 0.3;
+    --grid-horisontal-opacity: 0.2;
+}
+
+/**
+ * Override grid settings at bigger screen sizes
+ * Add/remove depending on how many you need
+ */
+@media (min-width: 560px) {
+    :root {
+        --media-query: 'Small';
+        --grid-offset: 32px;
+        --grid-gutter: 12px;
+        --grid-color: 10, 100%, 58%;
+    }
+}
+
+@media (min-width: 768px) {
+    :root {
+        --media-query: 'Medium';
+        --grid-columns: 12;
+        --grid-offset: 40px;
+        --grid-gutter: 16px;
+        --grid-color: 190, 100%, 50%;
+    }
+}
+
+@media (min-width: 1100px) {
+    :root {
+        --media-query: 'Large';
+        --grid-offset: 48px;
+        --grid-color: 10, 100%, 58%;
+        --grid-max_width: 1184px;
+    }
+}
+
+/**
+ * "Mixins"
+ * You probably don't need to edit anything here.
+ */
+:root {
+    --grid-vertical-color: hsla(var(--grid-color), var(--grid-vertical-opacity));
+    --grid-horizontal-color: hsla(var(--grid-color), var(--grid-horisontal-opacity));
+    --grid-vertical-lines: linear-gradient(to right,
+        var(--grid-vertical-color),
+        var(--grid-vertical-color) 1px,
+        transparent 1px,
+        transparent calc(100% - var(--grid-gutter) - 1px),
+        var(--grid-vertical-color) calc(100% - var(--grid-gutter) - 1px),
+        var(--grid-vertical-color) calc(100% - var(--grid-gutter)),
+        transparent calc(100% - var(--grid-gutter)),
+        transparent
+        );
+    --grid-horizontal-lines: linear-gradient(
+        transparent var(--grid-baseline-top),
+        var(--grid-horizontal-color) var(--grid-baseline-top),
+        var(--grid-horizontal-color) calc(var(--grid-baseline-top) + 1px),
+        transparent calc(var(--grid-baseline-top) + 1px)
+        );
+}
+
+/**
+ * Styling
+ * Using pseudos on <html> but could also use <body> or a <div id="app"> type thing.
+ */
+html {
+    position: relative;
+    min-width: 100vw;
+    min-height: 100vh;
+}
+
+html::before,
+html::after {
+    display: var(--grid-display);
+    z-index: var(--grid-z_index);
+}
+
+html::before {
+    content: var(--media-query, 'Unknown Media Query');
+    position: fixed;
+    top: 0.25rem;
+    left: 0.25rem;
+    color: var(--grid-vertical-color);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+    font-size: 1rem;
+    font-weight: 400;
+}
+
+html::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: calc(100% - 2 * var(--grid-offset));
+    max-width: var(--grid-max_width, none);
+    margin-right: auto;
+    margin-left: auto;
+    background-image: var(--grid-vertical-lines), var(--grid-horizontal-lines);
+    background-size: calc((100% + var(--grid-gutter)) / var(--grid-columns)) var(--grid-baseline);
+    pointer-events: none;
+    z-index: var(--grid-z_index);
+}
+
