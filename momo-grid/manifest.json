@@ -12,7 +12,7 @@
 
   "content_scripts": [{
     "css": ["grid.css"],
-    "matches": ["*://*/*"]
+    "matches": ["http://localhost/*", "http://*.devmomo.com/*"]
   }],
 
   "background": {
