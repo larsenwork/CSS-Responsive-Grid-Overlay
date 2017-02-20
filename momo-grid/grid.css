@@ -1,0 +1,122 @@
+/**
+* Pure CSS Responsive Grid Overlay
+* README: https://github.com/larsenwork/Pure-CSS-Responsive-Grid-Overlay
+*/
+
+:root {
+    --momo-grid-z_index: 1000000000; /* We have the biggest z-index */
+    --momo-grid-opacity: 0.3; /* Overall grid opacity */
+    --momo-grid-row-opacity: 0.5; /* 1 = same as columns, 0 = invisible */
+
+    --momo-grid-row-height: 4px;
+    --momo-grid-row-distance-top: 3px; /* Must be smaller than grid-row-height */
+    --momo-grid-column-count: 6;
+    --momo-grid-offset: 16px;
+    --momo-grid-gutter: 8px;
+    --momo-grid-hsl-color: 190, 100%, 50%;
+}
+
+/**
+ * Override settings at bigger screen sizes
+ */
+@media (min-width: 560px) {
+    :root {
+        --momo-grid-offset: 32px;
+        --momo-grid-gutter: 12px;
+        --momo-grid-hsl-color: 10, 100%, 58%;
+    }
+}
+
+@media (min-width: 768px) {
+    :root {
+        --momo-grid-column-count: 12;
+        --momo-grid-offset: 40px;
+        --momo-grid-gutter: 16px;
+        --momo-grid-hsl-color: 190, 100%, 50%;
+    }
+}
+
+@media (min-width: 1100px) {
+    :root {
+        --momo-grid-offset: 48px;
+        --momo-grid-hsl-color: 10, 100%, 58%;
+        --momo-grid-max_width: 1184px;
+    }
+}
+
+/**
+ * "Mixins" — You probably don't need to edit anything here
+ */
+:root {
+    --momo-grid-column-color: hsl(var(--momo-grid-hsl-color));
+    --momo-grid-baseline-color: hsla(var(--momo-grid-hsl-color), var(--momo-grid-row-opacity));
+    --momo-grid-columns: linear-gradient(to right,
+        var(--momo-grid-column-color),
+        var(--momo-grid-column-color) 1px,
+        transparent 1px,
+        transparent calc(100% - var(--momo-grid-gutter) - 1px),
+        var(--momo-grid-column-color) calc(100% - var(--momo-grid-gutter) - 1px),
+        var(--momo-grid-column-color) calc(100% - var(--momo-grid-gutter)),
+        transparent calc(100% - var(--momo-grid-gutter)),
+        transparent
+        );
+    --momo-grid-rows: linear-gradient(
+        transparent var(--momo-grid-row-distance-top),
+        var(--momo-grid-baseline-color) var(--momo-grid-row-distance-top),
+        var(--momo-grid-baseline-color) calc(var(--momo-grid-row-distance-top) + 1px),
+        transparent calc(var(--momo-grid-row-distance-top) + 1px)
+        );
+}
+
+/**
+ * Styling
+ */
+html.momo-grid {
+    position: relative;
+    min-width: 100vw;
+    min-height: 100vh;
+}
+
+html.momo-grid::before,
+html.momo-grid::after {
+    display: block;
+    z-index: var(--momo-grid-z_index);
+    opacity: var(--momo-grid-opacity);
+}
+
+html.momo-grid::before {
+    position: fixed;
+    top: 0.25rem;
+    left: 0.25rem;
+    color: var(--momo-grid-column-color);
+}
+
+html.momo-grid::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: calc(100% - 2 * var(--momo-grid-offset));
+    max-width: var(--momo-grid-max_width, none);
+    margin-right: auto;
+    margin-left: auto;
+    background-image:
+        var(--momo-grid-columns),
+        var(--momo-grid-rows);
+    background-size:
+        calc((100% + var(--momo-grid-gutter)) / var(--momo-grid-column-count))
+        var(--momo-grid-row-height);
+    pointer-events: none;
+    z-index: var(--momo-grid-z_index);
+}
+
+body {
+    transition: filter .2s ease;
+}
+
+html.momo-grid body {
+    filter: grayscale(100%);
+    /*filter: url("data:image/svg+xml,%3Csvg %3E%3Cdefs%3E%3Cfilter id='protanopia'%3E%3CfeColorMatrix type='matrix' values='0.567,0.433,0,0,0  0.558,0.442,0,0,0  0 0.242,0.758,0,0  0,0,0,1,0' in='SourceGraphic' /%3E%3C/filter%3E%3C/defs%3E%3C/svg%3E#protanopia");*/
+}
