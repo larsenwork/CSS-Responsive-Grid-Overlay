@@ -5,7 +5,7 @@
 
 :root {
     --momo-grid-z_index: 1000000000; /* We have the biggest z-index */
-    --momo-grid-opacity: 0.3; /* Overall grid opacity */
+    --momo-grid-opacity: 0.5; /* Overall grid opacity */
     --momo-grid-row-opacity: 0.5; /* 1 = same as columns, 0 = invisible */
 
     --momo-grid-row-height: 4px;
@@ -13,7 +13,10 @@
     --momo-grid-column-count: 6;
     --momo-grid-offset: 16px;
     --momo-grid-gutter: 8px;
-    --momo-grid-hsl-color: 190, 100%, 50%;
+    --momo-grid-hsl-color: 194, 100%, 59%;
+    
+    --momo-query: 'Base';
+    --momo-color-vision: 'Normal':
 }
 
 /**
@@ -23,7 +26,8 @@
     :root {
         --momo-grid-offset: 32px;
         --momo-grid-gutter: 12px;
-        --momo-grid-hsl-color: 10, 100%, 58%;
+        --momo-grid-hsl-color: 336, 100%, 73%;
+        --momo-query: 'Small';
     }
 }
 
@@ -32,15 +36,17 @@
         --momo-grid-column-count: 12;
         --momo-grid-offset: 40px;
         --momo-grid-gutter: 16px;
-        --momo-grid-hsl-color: 190, 100%, 50%;
+        --momo-grid-hsl-color: 159, 57%, 40%;
+        --momo-query: 'Medium';
     }
 }
 
 @media (min-width: 1100px) {
     :root {
         --momo-grid-offset: 48px;
-        --momo-grid-hsl-color: 10, 100%, 58%;
+        --momo-grid-hsl-color: 32, 93%, 73%;
         --momo-grid-max_width: 1184px;
+        --momo-query: 'Large';
     }
 }
 
@@ -87,9 +93,13 @@ html.momo-grid::after {
     display: block;
     opacity: var(--momo-grid-opacity);
     z-index: var(--momo-grid-z_index);
+    pointer-events: none;
 }
 
 html.momo-grid::before {
+    content: var(--momo-query) '\A' attr(color-vision);
+    white-space: pre;
+    text-transform: capitalize;
     position: fixed;
     top: 0.25rem;
     left: 0.25rem;
@@ -113,16 +123,33 @@ html.momo-grid::after {
     background-size:
         calc((100% + var(--momo-grid-gutter)) / var(--momo-grid-column-count))
         var(--momo-grid-row-height);
-    pointer-events: none;
     z-index: var(--momo-grid-z_index);
+}
+
+html {
+    background-image: url(""); /* Fixes filter so it's also working on body bg */
 }
 
 body {
     transition: filter 0.2s ease;
 }
 
-html.momo-grid body {
-    background: #232323;
-    filter: grayscale(100%);
-    /*filter: url("data:image/svg+xml,%3Csvg %3E%3Cdefs%3E%3Cfilter id='protanopia'%3E%3CfeColorMatrix type='matrix' values='0.567,0.433,0,0,0  0.558,0.442,0,0,0  0 0.242,0.758,0,0  0,0,0,1,0' in='SourceGraphic' /%3E%3C/filter%3E%3C/defs%3E%3C/svg%3E#protanopia");*/
+html.momo-grid[color-vision="deuteranomaly"] body {
+    filter: url(#deuteranomaly);
+}
+
+html.momo-grid[color-vision="protanomaly"] body {
+    filter: url(#protanomaly);
+}
+
+html.momo-grid[color-vision="protanopia"] body {
+    filter: url(#protanopia);
+}
+
+html.momo-grid[color-vision="deuteranopia"] body {
+    filter: url(#deuteranopia);
+}
+
+#momo-grid-color-filters {
+    display: none;
 }
