@@ -1,0 +1,25 @@
+{
+  "name": "css-grid-overlay",
+  "version": "0.0.3",
+  "description": "Easily adjustable grid overlay to make design discussions and development easier.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://larsenwork@github.com/larsenwork/Pure-CSS-Responsive-Grid-Overlay.git"
+  },
+  "author": "larsenwork",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/larsenwork/Pure-CSS-Responsive-Grid-Overlay/issues"
+  },
+  "homepage": "https://github.com/larsenwork/Pure-CSS-Responsive-Grid-Overlay#readme",
+  "devDependencies": {
+    "eslint": "^3.16.1",
+    "eslint-config-airbnb": "^14.1.0",
+    "eslint-plugin-import": "^2.2.0",
+    "eslint-plugin-jsx-a11y": "^4.0.0",
+    "eslint-plugin-react": "^6.10.0",
+    "stylelint": "^7.9.0",
+    "stylelint-config-standard": "^16.0.0",
+    "stylelint-order": "^0.3.0"
+  }
+}

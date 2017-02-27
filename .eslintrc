@@ -1,0 +1,7 @@
+{
+  "extends": "airbnb",
+  "rules": {
+    "no-restricted-syntax": ["error", "FunctionExpression", "WithStatement"],
+    "no-unused-expressions": ["error", { "allowTernary": true }]
+  }
+}

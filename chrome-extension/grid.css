@@ -14,8 +14,8 @@
   --g-color: 310, 100%, 68%;
   --g-opacity-baseline: 0.1;
   --g-opacity-line: 0.2;
-  --g-opacity-column: 0;
-  --g-opacity-gutter: 0.02;
+  --g-opacity-column: 0.03;
+  --g-opacity-gutter: 0;
 
   /* Baseline */
   --g-baseline-height: 4px;
@@ -102,31 +102,34 @@
 /**
 * Styling
 */
-html {
+.g-grid,
+.g-filter {
   display: flex;
   z-index: var(--g-z_index);
   position: absolute;
   top: 0;
   left: 0;
   width: 100vw;
-  height: var(--document-height, auto);
+  height: var(--document-height);
+  min-height: 100vh;
   justify-content: center;
-  background-image: url(); /* Bugfix: https://bugs.chromium.org/p/chromium/issues/detail?id=591015 */
-  background-color: black;
+  background-image: url(''); /* Bugfix: https://bugs.chromium.org/p/chromium/issues/detail?id=591015 */
   pointer-events: none;
 }
 
-html::before {
-  content: var(--g-media_query);
-  position: absolute;
+.g-grid::before,
+.g-filter::before {
+  content: var(--g-help-text, var(--g-media_query));
+  position: fixed;
   top: 0.25rem;
-  right: 0.4rem;
+  right: 0.5rem;
   color: hsl(var(--g-color));
+  font-size: calc(8px + 0.3vw + 0.3vh);
   text-transform: capitalize;
   white-space: pre;
 }
 
-html::after {
+.g-grid::after {
   content: '';
   width: calc(100% - 2 * var(--g-offset));
   max-width: var(--g-max_width);
@@ -134,4 +137,15 @@ html::after {
   background-image: var(--g-gradient-column), var(--g-gradient-baseline);
   background-position: 0 var(--g-baseline-start, 0);
   background-size: calc(100% + var(--g-gutter)) calc(var(--g-baseline-height) * 10); /* 100% height results rendering bug in chrome */
+}
+
+/**
+* Color Vision Filters
+*/
+#g-filter {
+  display: none;
+}
+
+body {
+  filter: var(--g-color-vision-url);
 }
