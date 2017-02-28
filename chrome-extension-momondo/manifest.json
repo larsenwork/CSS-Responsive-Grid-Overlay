@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
   "name": "Momo Grid Overlay",
-  "version": "0.2.0",
-  "description": "Momo grid overlay on localhost and devmomo.com",
+  "version": "0.2.1",
+  "description": "Grid overlay and color blindness testing tool",
   "icons": {
     "16": "images/icon16.png",
     "48": "images/icon48.png",
