@@ -1,30 +1,26 @@
 {
   "manifest_version": 2,
-
   "name": "Momo Grid Overlay",
-  "version": "0.1.1",
-  "description": "See the Momo grid overlay on localhost and devmomo.com",
+  "version": "0.1.5",
+  "description": "Momo grid overlay on localhost and devmomo.com",
   "icons": {
     "16": "images/icon16.png",
     "48": "images/icon48.png",
     "128": "images/icon128.png"
   },
-
+  "background": {
+    "scripts": ["grid.js"],
+    "persistent": false
+  },
   "content_scripts": [{
-    "matches": ["*://*/*"],
+    "matches": ["http://localhost/*", "http://devmomo.com/*"],
     "css": ["grid.css"]
   }],
-
-  "background": {
-    "scripts": ["grid.js"]
-  },
-
   "permissions" : [
     "http://*/*",
     "https://*/*",
     "tabs"
   ],
-
   "browser_action": {
     "default_icon": {
       "16": "images/icon16-off.png",

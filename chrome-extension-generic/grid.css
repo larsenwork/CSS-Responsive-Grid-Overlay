@@ -53,7 +53,7 @@
   :root {
     --g-color: 190, 100%, 50%;
     --g-offset: 48px;
-    --g-max_width: 1088px;
+    --g-max_width: 1184px;
     --g-media_query: 'Large';
   }
 }
