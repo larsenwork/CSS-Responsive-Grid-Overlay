@@ -1,20 +1,21 @@
 {
   "manifest_version": 2,
-  "name": "Momo Grid Overlay",
-  "version": "0.2.1",
-  "description": "Grid overlay and color blindness testing tool",
+  "name": "Grid Overlay",
+  "version": "0.0.1",
+  "description": "Grid overlay for all http and https pages",
   "icons": {
     "16": "images/icon16.png",
     "48": "images/icon48.png",
     "128": "images/icon128.png"
   },
   "background": {
-    "scripts": ["grid.js"],
+    "scripts": ["background.js"],
     "persistent": false
   },
   "content_scripts": [{
-    "matches": ["http://localhost/*", "http://devmomo.com/*"],
-    "css": ["grid.css"]
+    "matches": ["*://*/*"],
+    "css": ["content.css"],
+    "js": ["content.js"]
   }],
   "permissions" : [
     "http://*/*",
@@ -27,6 +28,6 @@
       "24": "images/icon24-off.png",
       "32": "images/icon32-off.png"
     },
-    "default_title": "MomoGrid"
+    "default_title": "CSS Grid Overlay"
   }
 }
